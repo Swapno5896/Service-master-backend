@@ -21,15 +21,15 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 client.connect((err) => {
-  const dataCollection = client.db("curd").collection("one");
+  const blogCollection = client.db("servie-master").collection("blogs");
   // perform actions on the collection object
 
   //   add some data
-  app.post("/addData", (req, res) => {
-    const users = req.body;
-    console.log(users);
-    dataCollection.insertMany(users).then((result) => {
-      console.log(result);
+  app.post("/addBlog", (req, res) => {
+    const fakeBlog = req.body;
+    console.log(fakeBlog);
+    blogCollection.insertOne(fakeBlog).then((result) => {
+      console.log(result.insertedCount);
     });
   });
 
