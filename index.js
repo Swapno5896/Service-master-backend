@@ -1,10 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -14,8 +15,7 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 const MongoClient = require("mongodb").MongoClient;
-const uri =
-  "mongodb+srv://swapno:5896@cluster0.kv6ok.mongodb.net/curd?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.kv6ok.mongodb.net/servie-master?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
