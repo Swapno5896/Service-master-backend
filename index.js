@@ -35,8 +35,8 @@ client.connect((err) => {
 
   // get some data
 
-  app.get("/getData", (req, res) => {
-    dataCollection.find({}).toArray((err, document) => {
+  app.get("/getBlog", (req, res) => {
+    blogCollection.find({}).toArray((err, document) => {
       res.send(document);
     });
   });
