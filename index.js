@@ -47,7 +47,7 @@ client.connect((err) => {
 
   app.delete("/deletBlog/:id", (req, res) => {
     console.log(req.params.id);
-    dataCollection
+    blogCollection
       .deleteOne({ _id: ObjectId(req.params.id) })
       .then((result) => console.log(result));
   });
