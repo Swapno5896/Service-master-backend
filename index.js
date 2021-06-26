@@ -45,7 +45,7 @@ client.connect((err) => {
 
   const ObjectId = require("mongodb").ObjectId;
 
-  app.delete("/deleteData/:id", (req, res) => {
+  app.delete("/deletBlog/:id", (req, res) => {
     console.log(req.params.id);
     dataCollection
       .deleteOne({ _id: ObjectId(req.params.id) })
