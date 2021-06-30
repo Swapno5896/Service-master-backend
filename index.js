@@ -1,10 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const fileUpload = require("express-fileupload");
 require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static("doctors"));
+app.use(fileUpload());
 const port = process.env.PORT || 9000;
 
 app.get("/", (req, res) => {
@@ -26,11 +29,15 @@ client.connect((err) => {
 
   //   add some data
   app.post("/addBlog", (req, res) => {
-    const fakeBlog = req.body;
-    console.log(fakeBlog);
-    blogCollection.insertOne(fakeBlog).then((result) => {
-      console.log(result.insertedCount);
-    });
+    const file = req.body.myFile.name;
+    console.log(file);
+    // file.mv(`${__dirname}/doctors/${file.name}`, (err) => {
+    //   console.log(err);
+    // });
+    // // console.log(req.body.myFile);
+    // blogCollection.insertOne(fakeBlog).then((result) => {
+    //   console.log(result.insertedCount);
+    // });
   });
 
   // get some data
@@ -46,10 +53,27 @@ client.connect((err) => {
   const ObjectId = require("mongodb").ObjectId;
 
   app.delete("/deletBlog/:id", (req, res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     blogCollection
       .deleteOne({ _id: ObjectId(req.params.id) })
       .then((result) => console.log(result));
+  });
+
+  // const ObjectId = require("mongodb").ObjectId; age kora hyca tai akn kora lagbe na
+
+  // app.delete("/deleteData/:id", (req, res) => {
+  //   console.log(req.params.id);
+  //   dataCollection
+  //     .deleteOne({ _id: ObjectId(req.params.id) })
+  //     .then((result) => console.log(result));
+  // });
+
+  app.get("/blogs/:id", (req, res) => {
+    blogCollection
+      .find({ _id: ObjectId(req.params.id) })
+      .toArray((err, document) => {
+        res.send(document);
+      });
   });
 
   // here we'll update our data
@@ -72,3 +96,5 @@ client.connect((err) => {
       });
   });
 });
+
+// jkdslklasdlk
