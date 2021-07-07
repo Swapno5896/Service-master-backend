@@ -25,7 +25,10 @@ const client = new MongoClient(uri, {
 });
 client.connect((err) => {
   const blogCollection = client.db("servie-master").collection("blogs");
-  // perform actions on the collection object
+  // portfolio
+  const portfoliosCollection = client.db("servie-master").collection("portfolios");
+  // products
+  const productsCollection = client.db("servie-master").collection("products");
 
   //   add some data
   app.post("/addBlog", (req, res) => {
