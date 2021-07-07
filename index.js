@@ -30,37 +30,131 @@ client.connect((err) => {
   // products
   const productsCollection = client.db("servie-master").collection("products");
 
-  //   add some data
+
+
+
+  // post multiple blogs
   app.post("/addBlog", (req, res) => {
-    const file = req.body.myFile.name;
-    console.log(file);
-    // file.mv(`${__dirname}/doctors/${file.name}`, (err) => {
-    //   console.log(err);
-    // });
-    // // console.log(req.body.myFile);
-    // blogCollection.insertOne(fakeBlog).then((result) => {
-    //   console.log(result.insertedCount);
-    // });
+    const fakeBlog = req.body;
+    // console.log(fakeBlog);
+    blogCollection.insertOne(fakeBlog).then((result) => {
+      console.log(result.insertedCount);
+    });
   });
 
-  // get some data
+  // post multiple Portfolio
+  app.post("/addPortfolio", (req, res) => {
+    const fakeBlog = req.body;
+    // console.log(fakeBlog);
+    portfoliosCollection.insertOne(fakeBlog).then((result) => {
+      console.log(result.insertedCount);
+    });
+  });
 
+
+  // post multiple products
+  app.post("/addProducts", (req, res) => {
+    const fakeBlog = req.body;
+    // console.log(fakeBlog);
+    productsCollection.insertOne(fakeBlog).then((result) => {
+      console.log(result.insertedCount);
+    });
+  });
+
+  //  get all blogs
   app.get("/getBlog", (req, res) => {
     blogCollection.find({}).toArray((err, document) => {
       res.send(document);
     });
   });
 
+  //  get all portfolio
+  app.get("/getPortfolio", (req, res) => {
+    portfoliosCollection.find({}).toArray((err, document) => {
+      res.send(document);
+    });
+  });
+
+
+  //  get all product
+  app.get("/getProduct", (req, res) => {
+    productsCollection.find({}).toArray((err, document) => {
+      res.send(document);
+    });
+  });
+
+
+
+  // get spacafic blog
+
+  const ObjId = require('mongodb').ObjectID
+  app.get('/getBlog/:id', (req, res) => {
+    blogCollection.find({ _id: ObjId(req.params.id) })
+      .toArray((err, doc) => {
+        res.send(doc)
+      })
+  })
+
+
+
+  // get spacafic Product
+
+  // const ObjId = require('mongodb').ObjectID
+  app.get('/getProduct/:id', (req, res) => {
+    productsCollection.find({ _id: ObjId(req.params.id) })
+      .toArray((err, doc) => {
+        res.send(doc)
+      })
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // 
+  //   add some data
+  // app.post("/addBlog", (req, res) => {
+  //   const file = req.body.myFile.name;
+  //   console.log(file);
+  //   // file.mv(`${__dirname}/doctors/${file.name}`, (err) => {
+  //   //   console.log(err);
+  //   // });
+  //   // // console.log(req.body.myFile);
+  //   // blogCollection.insertOne(fakeBlog).then((result) => {
+  //   //   console.log(result.insertedCount);
+  //   // });
+  // });
+
+  // get some data
+
+  // app.get("/getBlog", (req, res) => {
+  //   blogCollection.find({}).toArray((err, document) => {
+  //     res.send(document);
+  //   });
+  // });
+
   // delete
 
-  const ObjectId = require("mongodb").ObjectId;
+  // const ObjectId = require("mongodb").ObjectId;
 
-  app.delete("/deletBlog/:id", (req, res) => {
-    // console.log(req.params.id);
-    blogCollection
-      .deleteOne({ _id: ObjectId(req.params.id) })
-      .then((result) => console.log(result));
-  });
+  // app.delete("/deletBlog/:id", (req, res) => {
+  //   // console.log(req.params.id);
+  //   blogCollection
+  //     .deleteOne({ _id: ObjectId(req.params.id) })
+  //     .then((result) => console.log(result));
+  // });
 
   // const ObjectId = require("mongodb").ObjectId; age kora hyca tai akn kora lagbe na
 
@@ -71,33 +165,33 @@ client.connect((err) => {
   //     .then((result) => console.log(result));
   // });
 
-  app.get("/blogs/:id", (req, res) => {
-    blogCollection
-      .find({ _id: ObjectId(req.params.id) })
-      .toArray((err, document) => {
-        res.send(document);
-      });
-  });
+  // app.get("/blogs/:id", (req, res) => {
+  //   blogCollection
+  //     .find({ _id: ObjectId(req.params.id) })
+  //     .toArray((err, document) => {
+  //       res.send(document);
+  //     });
+  // });
 
   // here we'll update our data
-  app.patch("/update", (req, res) => {
-    // console.log(req.params.id);
-    // console.log(req.params.id,req.body.status);
-    console.log("four", req.body.status, req.body.id);
-    // const ObjectId = require("mongodb").ObjectId;
-    bookedServiceCollection
-      .updateOne(
-        { _id: ObjectId(req.body.id) },
-        {
-          $set: { status: req.body.status },
-        }
-      )
+  // app.patch("/update", (req, res) => {
+  //   // console.log(req.params.id);
+  //   // console.log(req.params.id,req.body.status);
+  //   console.log("four", req.body.status, req.body.id);
+  //   // const ObjectId = require("mongodb").ObjectId;
+  //   bookedServiceCollection
+  //     .updateOne(
+  //       { _id: ObjectId(req.body.id) },
+  //       {
+  //         $set: { status: req.body.status },
+  //       }
+  //     )
 
-      .then((result) => {
-        console.log("three", result);
-        res.send(result);
-      });
-  });
+  //     .then((result) => {
+  //       console.log("three", result);
+  //       res.send(result);
+  //     });
+  // });
 });
 
 // jkdslklasdlk
