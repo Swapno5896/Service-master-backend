@@ -89,7 +89,7 @@ client.connect((err) => {
   })
 
   // get specific portfolio
-  app.get('/getProduct/:id', (req, res) => {
+  app.get('/getPortfolio/:id', (req, res) => {
     portfoliosCollection.find({ _id: ObjId(req.params.id) })
       .toArray((err, doc) => {
         res.send(doc)
